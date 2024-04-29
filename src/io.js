@@ -11,6 +11,12 @@ const socketConnection = (io) => {
       io.emit("event-message", message);
     });
 
+    socket.on("object-event", (data) => {
+      const { event, message } = data;
+      logger.info(`Mensaje recibido de ${clientIp}: Evento: ${event}, Mensaje: ${message}`);
+      io.emit("object-event", { event, message });
+    });
+
     socket.on("disconnect", () => {
       logger.info(`User disconnected, ID: ${socket.id}, IP: ${clientIp}`);
     });
