@@ -16,6 +16,11 @@ const socketConnection = (io) => {
       logger.info(`Mensaje recibido de ${clientIp}: Evento: ${event}, Mensaje: ${message}`);
       io.emit("object-event", { event, message });
     });
+  
+    socket.on("event-danger", (message) => {
+      logger.info(`Mensaje recibido de ${clientIp}: ${message}`);
+      io.emit("event-danger", message);
+    });
 
     socket.on("disconnect", () => {
       logger.info(`User disconnected, ID: ${socket.id}, IP: ${clientIp}`);

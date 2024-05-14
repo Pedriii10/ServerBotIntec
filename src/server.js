@@ -1,13 +1,20 @@
 const cors = require("cors");
-const http = require("http");
+const https = require("https");
 const express = require("express");
 const socketConnection = require("./io");
+const fs = require("fs");
+
 const app = express();
 app.use(cors());
 
 const { Server } = require("socket.io");
 
-const server = http.createServer(app);
+const options = {
+  key: fs.readFileSync('./etc/letsencrypt/live/intecbot.com/privkey.pem'),
+  cert: fs.readFileSync('./etc/letsencrypt/live/intecbot.com/src/fullchain.pem')
+};
+
+const server = https.createServer(options, app);
 
 const io = new Server(server, {
   cors: {
