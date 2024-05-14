@@ -9,12 +9,7 @@ app.use(cors());
 
 const { Server } = require("socket.io");
 
-const options = {
-  key: fs.readFileSync('./etc/letsencrypt/live/intecbot.com/privkey.pem'),
-  cert: fs.readFileSync('./etc/letsencrypt/live/intecbot.com/src/fullchain.pem')
-};
-
-const server = https.createServer(options, app);
+const server = https.createServer(app);
 
 const io = new Server(server, {
   cors: {
